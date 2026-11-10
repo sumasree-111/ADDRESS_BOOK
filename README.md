@@ -1,8 +1,8 @@
-# 📒 Addressly – Smart Address Book
+#  Addressly – Smart Address Book
 
 **Addressly** is a Java-based desktop address book application designed to manage customer details and their addresses easily. It uses SQLite to store data locally and provides a simple, user-friendly interface with Light and Dark themes.
 
-## ✨ Features
+##  Features
 
 - **Add Customer:** Save customer details and multiple addresses.
 - **View Customers:** View saved customer information.
@@ -14,7 +14,7 @@
 - **Light & Dark Mode:** Switch between two interface themes.
 - **Database Storage:** Store customer and address information using SQLite.
 
-## 🛠️ Technologies Used
+##  Technologies Used
 
 - **Programming Language:** Java
 - **GUI:** Java Swing
@@ -22,7 +22,7 @@
 - **Database Connectivity:** JDBC
 - **IDE:** Visual Studio Code
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 ADDRESS_BOOK/
@@ -32,13 +32,13 @@ ADDRESS_BOOK/
 └── README.md
 ```
 
-## ⚙️ Requirements
+##  Requirements
 
 - Java JDK installed
 - Visual Studio Code or any Java IDE
 - SQLite JDBC Driver
 
-## 🚀 How to Run
+##  How to Run
 
 1. Clone this repository:
 
@@ -64,18 +64,12 @@ java -cp ".;sqlite-jdbc.jar" ex
 
 *Note: These commands are for Windows. Replace `sqlite-jdbc.jar` with the actual JDBC driver filename if it is different.*
 
-## 🎯 Project Objective
+## Project Objective
 
 The main objective of Addressly is to provide a simple and efficient way to manage customer contact information and addresses with database storage and easy record management.
 
-## 👩‍💻 Developer
-
-**SUMASREE RUNJALA**
-
-B.Tech – Computer Science and Engineering (AI & DS)
 
 GitHub: [sumasree-111](https://github.com/sumasree-111)
 
 ---
 
-⭐ If you find this project useful, feel free to explore the repository!
