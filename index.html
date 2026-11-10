@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addressly - Customer Address Book</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">📍</div>
+            <div>
+                <h2>ADDRESSLY</h2>
+                <small>CUSTOMER ADDRESS BOOK</small>
+            </div>
+        </div>
+
+        <p class="menu-heading">MAIN MENU</p>
+
+        <nav>
+            <button class="nav-item" data-page="add" onclick="showPage('add')">
+                <span>＋</span> Add Customer
+            </button>
+
+            <button class="nav-item active" data-page="view" onclick="showPage('view')">
+                <span>▤</span> View Customer
+            </button>
+
+            <button class="nav-item" data-page="search" onclick="showPage('search')">
+                <span>⌕</span> Search
+            </button>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <button class="theme-button" onclick="toggleTheme()">
+                <span id="themeIcon">☀</span>
+                <span id="themeText">Light Mode</span>
+            </button>
+
+            <p>Simple. Organized. Accessible.</p>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- VIEW PAGE -->
+        <section id="viewPage" class="page">
+            <header class="page-header">
+                <div>
+                    <h1>View Customers</h1>
+                    <p>All saved customer details and addresses.</p>
+                </div>
+                <button class="recycle-button" onclick="showPage('recycle')">
+                    ♻ Recycle Bin
+                </button>
+            </header>
+
+            <div class="content-card">
+                <div class="table-heading">
+                    <div>
+                        <h3>Customer Details</h3>
+                        <p>Manage your saved customer information</p>
+                    </div>
+                    <span class="count" id="customerCount">0 Customers</span>
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>House No.</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>PIN Code</th>
+                                <th>Default</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTable"></tbody>
+                    </table>
+                </div>
+
+                <div id="emptyView" class="empty-state">
+                    <div>📭</div>
+                    <h3>No customers found</h3>
+                    <p>Add your first customer to get started.</p>
+                    <button class="primary-button" onclick="showPage('add')">
+                        + Add Customer
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEARCH PAGE -->
+        <section id="searchPage" class="page hidden">
+            <header class="page-header">
+                <div>
+                    <h1>Search Customers</h1>
+                    <p>Find customers using name, phone, email or address.</p>
+                </div>
+            </header>
+
+            <div class="content-card">
+                <div class="search-box">
+                    <span>⌕</span>
+                    <input
+                        id="searchInput"
+                        type="text"
+                        placeholder="Search by name, phone, email, city or PIN..."
+                        oninput="searchCustomers()">
+                </div>
+
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>House No.</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>PIN Code</th>
+                                <th>Default</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="searchTable"></tbody>
+                    </table>
+                </div>
+                <div id="emptySearch" class="empty-state">
+                    <div>🔍</div>
+                    <h3>No matching customers</h3>
+                    <p>Try another search.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ADD / EDIT PAGE -->
+        <section id="formPage" class="page hidden">
+            <header class="page-header">
+                <div>
+                    <h1 id="formTitle">Add Customer</h1>
+                    <p id="formDescription">Enter customer details and address information.</p>
+                </div>
+            </header>
+
+            <div class="form-card">
+                <form id="customerForm" onsubmit="saveCustomer(event)">
+                    <h3>Personal Information</h3>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>Customer Name *</label>
+                            <input id="name" type="text" placeholder="Enter full name" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Phone Number *</label>
+                            <input id="phone" type="tel" maxlength="10"
+                                   pattern="[0-9]{10}" placeholder="10-digit phone number" required>
+                        </div>
+
+                        <div class="field full">
+                            <label>Email Address</label>
+                            <input id="email" type="email" placeholder="Enter email address">
+                        </div>
+                    </div>
+
+                    <div class="section-divider"></div>
+
+                    <h3>Address Information</h3>
+
+                    <div class="form-grid">
+                        <div class="field">
+                            <label>House Number *</label>
+                            <input id="house" type="text" placeholder="Enter house number" required>
+                        </div>
+
+                        <div class="field">
+                            <label>Street *</label>
+                            <input id="street" type="text" placeholder="Enter street name" required>
+                        </div>
+
+                        <div class="field">
+                            <label>City *</label>
+                            <input id="city" type="text" placeholder="Enter city" required>
+                        </div>
+
+                        <div class="field">
+                            <label>PIN Code *</label>
+                            <input id="pin" type="text" maxlength="6"
+                                   pattern="[0-9]{6}" placeholder="6-digit PIN code" required>
+                        </div>
+                    </div>
+
+                    <label class="default-check">
+                        <input id="isDefault" type="checkbox">
+                        <span>Set as default address</span>
+                    </label>
+
+                    <div class="form-actions">
+                        <button type="button" class="cancel-button" onclick="showPage('view')">
+                            Cancel
+                        </button>
+                        <button type="submit" class="primary-button" id="saveButton">
+                            Save Customer
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- RECYCLE BIN PAGE -->
+        <section id="recyclePage" class="page hidden">
+            <header class="page-header">
+                <div>
+                    <h1>Recycle Bin</h1>
+                    <p>Restore deleted customers or permanently remove them.</p>
+                </div>
+                <button class="cancel-button" onclick="showPage('view')">
+                    ← Back to Customers
+                </button>
+            </header>
+
+            <div class="content-card">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>House No.</th>
+                                <th>Street</th>
+                                <th>City</th>
+                                <th>PIN Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recycleTable"></tbody>
+                    </table>
+                </div>
+
+                <div id="emptyRecycle" class="empty-state">
+                    <div>♻</div>
+                    <h3>Recycle Bin is empty</h3>
+                    <p>Deleted customers will appear here.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
